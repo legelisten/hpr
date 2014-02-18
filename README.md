@@ -23,9 +23,11 @@ require "hpr"
 
 scraper = Hpr::Scraper.new(3049523)
 scraper.birth_date # => #<Date: 1966-11-05 ((2439435j,0s,0n),+0s,2299161j)>
-scraper.approval # => "Autorisasjon"
-scraper.approval_period # => #<Date: 1991-07-04 ((2448442j,0s,0n),+0s,2299161j)>..#<Date: 2041-11-05 ((2466829j,0s,0n),+0s,2299161j)>
-scraper.additional_expertise # => [#<struct Hpr::AdditionalExpertise name="Godkjent implantatprotetisk behandler", period=#<Date: 2011-01-05 ((2455567j,0s,0n),+0s,2299161j)>..#<Date: 2041-11-05 ((2466829j,0s,0n),+0s,2299161j)>>]
+scraper.dentist? # => true
+dentist = scraper.dentist
+dentist.approval # => "Autorisasjon"
+dentist.approval_period # => #<Date: 1991-07-04 ((2448442j,0s,0n),+0s,2299161j)>..#<Date: 2041-11-05 ((2466829j,0s,0n),+0s,2299161j)>
+dentist.additional_expertise # => [#<struct Hpr::AdditionalExpertise name="Godkjent implantatprotetisk behandler", period=#<Date: 2011-01-05 ((2455567j,0s,0n),+0s,2299161j)>..#<Date: 2041-11-05 ((2466829j,0s,0n),+0s,2299161j)>>]
 # ..
 ```
 

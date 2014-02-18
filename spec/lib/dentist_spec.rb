@@ -6,6 +6,7 @@ module Hpr
     let(:period) { Date.new(1991, 7, 4)..Date.new(2041, 11, 5) }
 
     subject { Scraper.new(number) }
+    let(:dentist) { subject.dentist }
 
     before do
       stub_request(:get, "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=#{number}").
@@ -21,35 +22,36 @@ module Hpr
     end
 
     it "scrapes the profession" do
-      expect(subject.profession).to eq("Tannlege")
+      expect(subject.dentist?).to be_true
+      expect(subject.physician?).to be_false
     end
 
     describe "approval" do
       it "scrapes the approval mechanism" do
-        expect(subject.approval).to eq("Autorisasjon")
+        expect(dentist.approval).to eq("Autorisasjon")
       end
 
       it "scrapes the approval period" do
-        expect(subject.approval_period).to eq(period)
+        expect(dentist.approval_period).to eq(period)
       end
     end
 
     describe "requisition law" do
       it "scrapes the requisition law procedure" do
-        expect(subject.requisition_law).to eq("Full rekvisisjonsrett")
+        expect(dentist.requisition_law).to eq("Full rekvisisjonsrett")
       end
 
       it "scrapes the requisition law period" do
-        expect(subject.requisition_law_period).to eq(period)
+        expect(dentist.requisition_law_period).to eq(period)
       end
     end
 
     it "scrapes any specials" do
-      expect(subject.specials).to be_empty
+      expect(dentist.specials).to be_empty
     end
 
     it "scrapes any additional expertise" do
-      expertise = subject.additional_expertise
+      expertise = dentist.additional_expertise
       expect(expertise).to have(1).item
 
       exp = expertise.first
@@ -59,7 +61,7 @@ module Hpr
     end
 
     it "knows whether the internship has been approved" do
-      expect(subject.approved_internship?).to be_false
+      expect(dentist.approved_internship?).to be_false
     end
   end
 end

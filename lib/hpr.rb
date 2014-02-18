@@ -4,12 +4,20 @@ require "nokogiri"
 require_relative "hpr/version"
 
 module Hpr
+  module DateHelper
+    DATE_FORMAT = "%d.%m.%Y".freeze
+
+    def str_to_date(str)
+      begin
+        Date.strptime(str, DATE_FORMAT)
+      rescue ArgumentError; end
+    end
+  end
+
   class AdditionalExpertise < Struct.new(:name, :period); end
   class Specials < AdditionalExpertise; end
 
-  class Scraper
-    BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=".freeze
-    DATE_FORMAT = "%d.%m.%Y".freeze
+  class Professional
     APPROVAL = "Godkjenning".freeze
     REQUISITION_LAW = "Rekvisisjonsrett".freeze
     ADDITIONAL_EXPERTISE = "Tilleggskompetanse".freeze
@@ -17,28 +25,10 @@ module Hpr
     YES = "Ja".freeze
     SPECIALS = "Spesialitet".freeze
 
-    def initialize(number)
-      @number = number.to_s
-    end
+    include DateHelper
 
-    def name
-      @name ||= person_header.at_css("h2").text.gsub(/\s{2,}/, " ")
-    end
-
-    def birth_date
-      @birth_date ||= begin
-        birth_date_para = person_header.at_css("p").text
-        birth_date_str = birth_date_para[/Fødselsdato: (\d{2}[.]\d{2}[.]\d{4})/, 1]
-        str_to_date(birth_date_str)
-      end
-    end
-
-    def person_header
-      @person_header ||= page.at_css(".person-header")
-    end
-
-    def profession
-      @profession ||= page.at_css(".approval-box h3").text
+    def initialize(approval_box)
+      @approval_box = approval_box
     end
 
     def approval
@@ -132,13 +122,75 @@ module Hpr
     end
 
     def entries
-      @entries ||= page.css(".data-entry")
+      @entries ||= @approval_box.css(".data-entry")
+    end
+  end
+
+  class Scraper
+    BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=".freeze
+    PHYSICIAN = "Lege".freeze
+    DENTIST = "Tannlege".freeze
+
+    include DateHelper
+
+    def initialize(number)
+      @number = number.to_s
     end
 
-    def str_to_date(str)
-      begin
-        Date.strptime(str, DATE_FORMAT)
-      rescue ArgumentError; end
+    def name
+      @name ||= person_header.at_css("h2").text.gsub(/\s{2,}/, " ")
+    end
+
+    def birth_date
+      @birth_date ||= begin
+        birth_date_para = person_header.at_css("p").text
+        birth_date_str = birth_date_para[/Fødselsdato: (\d{2}[.]\d{2}[.]\d{4})/, 1]
+        str_to_date(birth_date_str)
+      end
+    end
+
+    def physician
+      unless instance_variable_defined?(:@physician)
+        @physician = physician_approval_box ? Professional.new(physician_approval_box) : nil
+      end
+      @physician
+    end
+
+    def physician?
+      !! physician
+    end
+
+    def dentist
+      unless instance_variable_defined?(:@dentist)
+        @dentist = dentist_approval_box ? Professional.new(dentist_approval_box) : nil
+      end
+      @dentist
+    end
+
+    def dentist?
+      !! dentist
+    end
+
+    def dentist_approval_box
+      unless instance_variable_defined?(:@dentist_approval_box)
+        @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text == DENTIST }
+      end
+      @dentist_approval_box
+    end
+
+    def physician_approval_box
+      unless instance_variable_defined?(:@physician_approval_box)
+        @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text == PHYSICIAN }
+      end
+      @physician_approval_box
+    end
+
+    def approval_boxes
+      @approval_boxes ||= page.css(".approval-box")
+    end
+
+    def person_header
+      @person_header ||= page.at_css(".person-header")
     end
 
     def page
