@@ -21,12 +21,20 @@ module Hpr
       @number = number.to_s
     end
 
+    def name
+      @name ||= person_header.at_css("h2").text.gsub(/\s{2,}/, " ")
+    end
+
     def birth_date
       @birth_date ||= begin
-        birth_date_para = page.at_css(".person-header p").text
+        birth_date_para = person_header.at_css("p").text
         birth_date_str = birth_date_para[/Fødselsdato: (\d{2}[.]\d{2}[.]\d{4})/, 1]
         str_to_date(birth_date_str)
       end
+    end
+
+    def person_header
+      @person_header ||= page.at_css(".person-header")
     end
 
     def profession

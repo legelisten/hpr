@@ -12,6 +12,10 @@ module Hpr
         to_return(body: File.new("spec/fixtures/physicians/#{number}.html"))
     end
 
+    it "scrapes the birth name" do
+      expect(subject.name).to eq("FINN JOHNSEN")
+    end
+
     it "scrapes the birth date" do
       expect(subject.birth_date).to eq(Date.new(1952, 1, 16))
     end
