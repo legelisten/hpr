@@ -77,7 +77,7 @@ module Hpr
 
     def specials
       @specials ||= specials_rows.to_a.map do |row|
-        name = row.at_css(".cell2").text
+        name = row.at_css(".cell2").text.strip
         Specials.new(name, period(row))
       end
     end
@@ -85,23 +85,23 @@ module Hpr
   private
 
     def specials_rows
-      @specials_rows = entries.select { |entry| entry.at_css(".cell1").text == SPECIALS }
+      @specials_rows = entries.select { |entry| entry.at_css(".cell1").text.strip == SPECIALS }
     end
 
     def approved_internship_row
       unless instance_variable_defined?(:@approved_internship_row)
-        @approved_internship_row = entries.find { |entry| entry.at_css(".cell1").text == APPROVED_INTERSHIP }
+        @approved_internship_row = entries.find { |entry| entry.at_css(".cell1").text.strip == APPROVED_INTERSHIP }
       end
       @approved_internship_row
     end
 
     def additional_expertise_rows
-      @additional_expertise_rows = entries.select { |entry| entry.at_css(".cell1").text == ADDITIONAL_EXPERTISE }
+      @additional_expertise_rows = entries.select { |entry| entry.at_css(".cell1").text.strip == ADDITIONAL_EXPERTISE }
     end
 
     def requisition_law_row
       unless instance_variable_defined?(:@requisition_law_row)
-        @requisition_law_row = entries.find { |entry| entry.at_css(".cell1").text == REQUISITION_LAW }
+        @requisition_law_row = entries.find { |entry| entry.at_css(".cell1").text.strip == REQUISITION_LAW }
       end
       @requisition_law_row
     end
@@ -118,7 +118,7 @@ module Hpr
 
     def approval_row
       unless instance_variable_defined?(:@approval_row)
-        @approval_row = entries.find { |entry| entry.at_css(".cell1").text == APPROVAL }
+        @approval_row = entries.find { |entry| entry.at_css(".cell1").text.strip == APPROVAL }
       end
       @approval_row
     end
@@ -181,14 +181,14 @@ module Hpr
 
     def dentist_approval_box
       unless instance_variable_defined?(:@dentist_approval_box)
-        @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text == DENTIST }
+        @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == DENTIST }
       end
       @dentist_approval_box
     end
 
     def physician_approval_box
       unless instance_variable_defined?(:@physician_approval_box)
-        @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text == PHYSICIAN }
+        @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PHYSICIAN }
       end
       @physician_approval_box
     end
