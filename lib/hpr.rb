@@ -140,7 +140,7 @@ module Hpr
     def initialize(number)
       @page ||= Nokogiri::HTML(open(BASE_URL + number.to_s))
 
-      if @page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet')]")
+      if hpr_number_not_found?
         raise ArgumentError, "Invalid HPR ID: #{number}"
       end
     end
@@ -201,8 +201,10 @@ module Hpr
       @person_header ||= page.at_css(".person-header")
     end
 
-    # def page
-    #   @page ||= Nokogiri::HTML(open(BASE_URL + @number))
-    # end
+  private
+
+    def hpr_number_not_found?
+      !!@page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet')]")
+    end
   end
 end
