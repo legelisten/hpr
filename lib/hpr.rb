@@ -135,8 +135,14 @@ module Hpr
 
     include DateHelper
 
+    attr_reader :page
+
     def initialize(number)
-      @number = number.to_s
+      @page ||= Nokogiri::HTML(open(BASE_URL + number.to_s))
+
+      if @page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet')]")
+        raise ArgumentError, "Invalid HPR ID"
+      end
     end
 
     def name
@@ -195,8 +201,8 @@ module Hpr
       @person_header ||= page.at_css(".person-header")
     end
 
-    def page
-      @page ||= Nokogiri::HTML(open(BASE_URL + @number))
-    end
+    # def page
+    #   @page ||= Nokogiri::HTML(open(BASE_URL + @number))
+    # end
   end
 end
