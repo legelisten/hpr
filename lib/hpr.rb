@@ -141,7 +141,7 @@ module Hpr
       @page ||= Nokogiri::HTML(open(BASE_URL + number.to_s))
 
       if @page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet')]")
-        raise ArgumentError, "Invalid HPR ID"
+        raise ArgumentError, "Invalid HPR ID: #{number}"
       end
     end
 
