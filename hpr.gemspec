@@ -6,10 +6,10 @@ require 'hpr/version'
 Gem::Specification.new do |spec|
   spec.name          = "hpr"
   spec.version       = Hpr::VERSION
-  spec.authors       = ["Cristian Rasch"]
-  spec.email         = ["cristianrasch@fastmail.fm"]
+  spec.authors       = ["Cristian Rasch", "Roger Kind Kristiansen"]
+  spec.email         = ["cristianrasch@fastmail.fm", "roger@legelisten.no"]
   spec.summary       = %q{Ruby wrapper for Helsepersonellregisteret (HPR).}
-  spec.homepage      = "https://github.com/legelisten/hpr-cristian/"
+  spec.homepage      = "https://github.com/legelisten/hpr/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
