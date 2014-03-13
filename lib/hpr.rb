@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "open-uri"
 require "nokogiri"
 
@@ -32,7 +34,7 @@ module Hpr
     end
 
     def approval
-      @approval ||= approval_row.at_css(".cell2").text
+      @approval ||= approval_row.at_css(".cell2").text.strip
     end
 
     def approval_period
@@ -43,7 +45,7 @@ module Hpr
     end
 
     def requisition_law
-      @requisition_law ||= requisition_law_row.at_css(".cell2").text
+      @requisition_law ||= requisition_law_row.at_css(".cell2").text.strip
     end
 
     def requisition_law_period
@@ -55,7 +57,7 @@ module Hpr
 
     def additional_expertise
       @additional_expertise ||= additional_expertise_rows.to_a.map do |row|
-        name = row.at_css(".cell2").text
+        name = row.at_css(".cell2").text.strip
         AdditionalExpertise.new(name, period(row))
       end
     end
