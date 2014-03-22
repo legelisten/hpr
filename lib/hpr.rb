@@ -129,6 +129,8 @@ module Hpr
   end
 
   class Scraper
+    class InvalidHprNumberError < ArgumentError; end
+
     BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
@@ -141,7 +143,7 @@ module Hpr
       @page ||= Nokogiri::HTML(open(BASE_URL + number.to_s))
 
       if hpr_number_not_found?
-        raise ArgumentError, "Invalid HPR ID: #{number}"
+        raise InvalidHprNumberError, "HPR number: #{number}"
       end
     end
 
