@@ -204,7 +204,7 @@ module Hpr
   private
 
     def hpr_number_not_found?
-      !!@page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet')]")
+      !!@page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet') or contains(.,'Vennligst oppgi HPR/ID-nummer')]")
     end
   end
 end
