@@ -140,7 +140,7 @@ module Hpr
     attr_reader :page
 
     def initialize(number)
-      @page ||= Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => number}))
+      @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => number}))
 
       if hpr_number_not_found?
         raise InvalidHprNumberError, "HPR number: #{number}"
