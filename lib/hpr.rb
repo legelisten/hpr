@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-require "open-uri"
 require "nokogiri"
+require "rest_client"
 
 require_relative "hpr/version"
 
@@ -131,7 +131,7 @@ module Hpr
   class Scraper
     class InvalidHprNumberError < ArgumentError; end
 
-    BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=".freeze
+    BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
 
@@ -140,7 +140,7 @@ module Hpr
     attr_reader :page
 
     def initialize(number)
-      @page ||= Nokogiri::HTML(open(BASE_URL + number.to_s))
+      @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => number}))
 
       if hpr_number_not_found?
         raise InvalidHprNumberError, "HPR number: #{number}"

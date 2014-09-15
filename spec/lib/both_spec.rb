@@ -7,8 +7,7 @@ module Hpr
     subject { Scraper.new(number) }
 
     before do
-      stub_request(:get, "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=#{number}").
-        to_return(body: File.new("spec/fixtures/both/#{number}.html"))
+      stub_hpr_request(number, 'both')
     end
 
     it "scrapes the birth name" do
@@ -20,8 +19,8 @@ module Hpr
     end
 
     it "scrapes the profession" do
-      expect(subject.physician?).to be_true
-      expect(subject.dentist?).to be_true
+      expect(subject.physician?).to be_truthy
+      expect(subject.dentist?).to be_truthy
     end
 
     describe "physician" do
@@ -49,7 +48,7 @@ module Hpr
       end
 
       it "scrapes any specials" do
-        expect(physician.specials).to have(1).item
+        expect(physician.specials.count).to equal(1)
       end
 
       it "scrapes any additional expertise" do
@@ -58,7 +57,7 @@ module Hpr
 
       describe "approved internship" do
         it "knows whether the internship has been approved" do
-          expect(physician.approved_internship?).to be_true
+          expect(physician.approved_internship?).to be_truthy
         end
 
         it "scrapes the approved internship date" do
@@ -100,7 +99,7 @@ module Hpr
       end
 
       it "knows whether the internship has been approved" do
-        expect(dentist.approved_internship?).to be_false
+        expect(dentist.approved_internship?).to be_falsey
       end
     end
   end

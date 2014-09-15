@@ -9,8 +9,7 @@ module Hpr
     let(:dentist) { subject.dentist }
 
     before do
-      stub_request(:get, "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=#{number}").
-        to_return(body: File.new("spec/fixtures/dentists/#{number}.html"))
+      stub_hpr_request(number, 'dentists')
     end
 
     it "scrapes the birth name" do
@@ -22,8 +21,8 @@ module Hpr
     end
 
     it "scrapes the profession" do
-      expect(subject.dentist?).to be_true
-      expect(subject.physician?).to be_false
+      expect(subject.dentist?).to be_truthy
+      expect(subject.physician?).to be_falsey
     end
 
     describe "approval" do
@@ -52,7 +51,7 @@ module Hpr
 
     it "scrapes any additional expertise" do
       expertise = dentist.additional_expertise
-      expect(expertise).to have(1).item
+      expect(expertise.count).to equal(1)
 
       exp = expertise.first
       expect(exp.name).to eq("Godkjent implantatprotetisk behandler")
@@ -61,7 +60,7 @@ module Hpr
     end
 
     it "knows whether the internship has been approved" do
-      expect(dentist.approved_internship?).to be_false
+      expect(dentist.approved_internship?).to be_falsey
     end
   end
 end
