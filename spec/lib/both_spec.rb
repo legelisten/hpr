@@ -7,8 +7,7 @@ module Hpr
     subject { Scraper.new(number) }
 
     before do
-      stub_request(:get, "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=#{number}").
-        to_return(body: File.new("spec/fixtures/both/#{number}.html"))
+      stub_hpr_request(number, 'both')
     end
 
     it "scrapes the birth name" do

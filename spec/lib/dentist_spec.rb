@@ -9,8 +9,7 @@ module Hpr
     let(:dentist) { subject.dentist }
 
     before do
-      stub_request(:get, "https://hpr.sak.no/Hpr/Hpr/Lookup?Number=#{number}").
-        to_return(body: File.new("spec/fixtures/dentists/#{number}.html"))
+      stub_hpr_request(number, 'dentists')
     end
 
     it "scrapes the birth name" do
