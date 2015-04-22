@@ -134,6 +134,7 @@ module Hpr
     BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
+    CHIROPRACTOR = "Kiropraktor".freeze
 
     include DateHelper
 
@@ -181,6 +182,17 @@ module Hpr
       !! dentist
     end
 
+    def chiropractor
+      unless instance_variable_defined?(:@chiropractor)
+        @chiropractor = chiropractor_approval_box ? Professional.new(chiropractor_approval_box) : nil
+      end
+      @chiropractor
+    end
+
+    def chiropractor?
+      !! chiropractor
+    end
+
     def dentist_approval_box
       unless instance_variable_defined?(:@dentist_approval_box)
         @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == DENTIST }
@@ -193,6 +205,13 @@ module Hpr
         @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PHYSICIAN }
       end
       @physician_approval_box
+    end
+
+    def chiropractor_approval_box
+      unless instance_variable_defined?(:@chiropractor_approval_box)
+        @chiropractor_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == CHIROPRACTOR }
+      end
+      @chiropractor_approval_box
     end
 
     def approval_boxes
