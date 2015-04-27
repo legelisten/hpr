@@ -36,6 +36,7 @@ module Hpr
     end
 
     it "scrapes any specials" do
+      # As far as we know at the moment, no chiropractor specialities exist at all.
       expect(chiropractor.specials).to be_empty
     end
 
