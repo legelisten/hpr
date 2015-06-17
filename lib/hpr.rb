@@ -21,7 +21,7 @@ module Hpr
 
   class Professional
     APPROVAL = "Godkjenning".freeze
-    REQUISITION_LAW = "Rekvisisjonsrett".freeze
+    REQUISITION_PRIVILEGE = "Rekvisisjonsrett".freeze
     ADDITIONAL_EXPERTISE = "Tilleggskompetanse".freeze
     APPROVED_INTERSHIP = "Godkjent turnus".freeze
     YES = "Ja".freeze
@@ -44,15 +44,15 @@ module Hpr
       @approval_period
     end
 
-    def requisition_law
-      @requisition_law ||= requisition_law_row.at_css(".cell2").text.strip
+    def requisition_privilege
+      @requisition_privilege ||= requisition_privilege_row.at_css(".cell2").text.strip
     end
 
-    def requisition_law_period
-      unless instance_variable_defined?(:@requisition_law_period)
-        @requisition_law_period = period(requisition_law_row)
+    def requisition_privilege_period
+      unless instance_variable_defined?(:@requisition_privilege_period)
+        @requisition_privilege_period = period(requisition_privilege_row)
       end
-      @requisition_law_period
+      @requisition_privilege_period
     end
 
     def additional_expertise
@@ -99,11 +99,11 @@ module Hpr
       @additional_expertise_rows = entries.select { |entry| entry.at_css(".cell1").text.strip == ADDITIONAL_EXPERTISE }
     end
 
-    def requisition_law_row
-      unless instance_variable_defined?(:@requisition_law_row)
-        @requisition_law_row = entries.find { |entry| entry.at_css(".cell1").text.strip == REQUISITION_LAW }
+    def requisition_privilege_row
+      unless instance_variable_defined?(:@requisition_privilege_row)
+        @requisition_privilege_row = entries.find { |entry| entry.at_css(".cell1").text.strip == REQUISITION_PRIVILEGE }
       end
-      @requisition_law_row
+      @requisition_privilege_row
     end
 
     def period(row)

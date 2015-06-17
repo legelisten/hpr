@@ -35,13 +35,13 @@ module Hpr
       end
     end
 
-    describe "requisition law" do
-      it "scrapes the requisition law procedure" do
-        expect(dentist.requisition_law).to eq("Full rekvisisjonsrett")
+    describe "requisition privilege" do
+      it "scrapes the requisition privilege procedure" do
+        expect(dentist.requisition_privilege).to eq("Full rekvisisjonsrett")
       end
 
-      it "scrapes the requisition law period" do
-        expect(dentist.requisition_law_period).to eq(period)
+      it "scrapes the requisition privilege period" do
+        expect(dentist.requisition_privilege_period).to eq(period)
       end
     end
 
