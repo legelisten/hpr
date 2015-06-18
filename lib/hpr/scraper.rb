@@ -17,15 +17,16 @@ module Hpr
 
     include DateHelper
 
-    attr_reader :page
+    attr_reader :hpr_number, :page
 
-    def initialize(number)
-      @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => number}))
+    def initialize(hpr_number)
+      @hpr_number = hpr_number
+      @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => hpr_number}))
 
       if hpr_number_not_found?
-        raise InvalidHprNumberError, "HPR number: #{number}"
+        raise InvalidHprNumberError, "HPR number: #{hpr_number}"
       elsif person_has_lost_authorization?
-        raise MissingMedicalAuthorizationError, "HPR number: #{number}"
+        raise MissingMedicalAuthorizationError, "HPR number: #{hpr_number}"
       end
     end
 
