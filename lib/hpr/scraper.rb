@@ -6,12 +6,14 @@ require "hpr/professional"
 
 module Hpr
   class Scraper
-    class InvalidHprNumberError < ArgumentError; end
+    class MissingMedicalAuthorizationError < ArgumentError; end
+    class InvalidHprNumberError < MissingMedicalAuthorizationError; end
 
     BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
     CHIROPRACTOR = "Kiropraktor".freeze
+    NO_AUTHORIZATION = "Ingen autorisasjon".freeze
 
     include DateHelper
 
@@ -22,6 +24,8 @@ module Hpr
 
       if hpr_number_not_found?
         raise InvalidHprNumberError, "HPR number: #{number}"
+      elsif person_has_lost_authorization?
+        raise MissingMedicalAuthorizationError, "HPR number: #{number}"
       end
     end
 
@@ -103,6 +107,10 @@ module Hpr
 
     def hpr_number_not_found?
       !!@page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet') or contains(.,'Vennligst oppgi HPR/ID-nummer')]")
+    end
+
+    def person_has_lost_authorization?
+      approval_boxes.length == 1 && approval_boxes[0].at_css("h3").text.strip == NO_AUTHORIZATION
     end
   end
 end
