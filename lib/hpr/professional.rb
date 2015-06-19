@@ -37,7 +37,9 @@ module Hpr
     end
 
     def requisition_privilege
-      @requisition_privilege ||= requisition_privilege_row.at_css(".cell2").text.strip
+      if requisition_privilege_row
+        @requisition_privilege ||= requisition_privilege_row.at_css(".cell2").text.strip
+      end
     end
 
     def requisition_privilege_period
