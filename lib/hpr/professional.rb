@@ -12,12 +12,17 @@ module Hpr
     APPROVED_INTERSHIP = "Godkjent turnus".freeze
     YES = "Ja".freeze
     SPECIALS = "Spesialitet".freeze
+    NO_AUTHORIZATION = "Ingen gjeldende autorisasjon".freeze
 
     include DateHelper
 
     # approval_box - as returned from Hpr::Scraper
     def initialize(approval_box)
       @approval_box = approval_box
+    end
+
+    def approved?
+      approval_row && !approval.include?(NO_AUTHORIZATION)
     end
 
     def approval
