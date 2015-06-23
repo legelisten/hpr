@@ -3,4 +3,7 @@
 require "hpr/version"
 require "hpr/scraper"
 
-module Hpr end
+module Hpr
+  class MissingMedicalAuthorizationError < ArgumentError; end
+  class InvalidHprNumberError < MissingMedicalAuthorizationError; end
+end

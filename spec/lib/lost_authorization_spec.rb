@@ -13,7 +13,7 @@ module Hpr
       end
 
       it "raises an exception" do
-        expect{ scraper }.to raise_error(Scraper::MissingMedicalAuthorizationError)
+        expect{ scraper }.to raise_error(MissingMedicalAuthorizationError)
       end
     end
 

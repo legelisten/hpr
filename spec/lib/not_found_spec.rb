@@ -13,7 +13,7 @@ module Hpr
       end
 
       it "raises an exception" do
-        expect{ subject }.to raise_error(Scraper::InvalidHprNumberError)
+        expect{ subject }.to raise_error(InvalidHprNumberError)
       end
     end
 
@@ -25,7 +25,7 @@ module Hpr
       end
 
       it "raises an exception" do
-        expect{ subject }.to raise_error(Scraper::InvalidHprNumberError)
+        expect{ subject }.to raise_error(InvalidHprNumberError)
       end
     end
   end

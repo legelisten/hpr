@@ -6,9 +6,6 @@ require "hpr/professional"
 
 module Hpr
   class Scraper
-    class MissingMedicalAuthorizationError < ArgumentError; end
-    class InvalidHprNumberError < MissingMedicalAuthorizationError; end
-
     BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
@@ -24,9 +21,9 @@ module Hpr
       @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => hpr_number}))
 
       if hpr_number_not_found?
-        raise InvalidHprNumberError, "HPR number: #{hpr_number}"
+        raise Hpr::InvalidHprNumberError, "HPR number: #{hpr_number}"
       elsif person_has_lost_authorization?
-        raise MissingMedicalAuthorizationError, "HPR number: #{hpr_number}"
+        raise Hpr::MissingMedicalAuthorizationError, "HPR number: #{hpr_number}"
       end
     end
 
