@@ -43,10 +43,9 @@ module Hpr
     end
 
     def requisition_privilege_period
-      unless instance_variable_defined?(:@requisition_privilege_period)
-        @requisition_privilege_period = period(requisition_privilege_row)
+      if requisition_privilege_row
+        @requisition_privilege_period ||= period(requisition_privilege_row)
       end
-      @requisition_privilege_period
     end
 
     def additional_expertise
