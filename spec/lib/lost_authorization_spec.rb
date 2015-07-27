@@ -25,9 +25,18 @@ module Hpr
         stub_hpr_request(number, 'lost_authorization')
       end
 
-      describe 'approved?' do
+      describe '#approved?' do
         it 'returns false' do
           expect(professional.approved?).to eq false
+        end
+      end
+
+      describe '#approval_period' do
+        # When person has lost authorization, they can have an authorization
+        # line with the text "Ingen gjeldende autorisasjon." and an empty
+        # approval period.
+        it 'returns nil' do
+          expect(professional.approval_period).to eq nil
         end
       end
     end

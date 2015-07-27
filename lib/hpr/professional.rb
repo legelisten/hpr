@@ -100,12 +100,18 @@ module Hpr
     end
 
     def period(row)
-      from = row.at_css(".cell4").text.lstrip!
-      date_from = str_to_date(from)
+      date_from = date_from(row)
       if date_from
         to = row.at_css(".cell6").text.lstrip!
         date_to = str_to_date(to)
         (date_from..date_to) if date_to
+      end
+    end
+
+    def date_from(row)
+      if row.at_css(".cell4")
+        from = row.at_css(".cell4").text.lstrip!
+        str_to_date(from)
       end
     end
 
