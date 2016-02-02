@@ -6,7 +6,7 @@ require "hpr/professional"
 
 module Hpr
   class Scraper
-    BASE_URL = "https://hpr.sak.no/Hpr/Hpr/Lookup".freeze
+    BASE_URL = "https://register.helsedirektoratet.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
     CHIROPRACTOR = "Kiropraktor".freeze
