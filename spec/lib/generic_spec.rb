@@ -6,12 +6,24 @@ module Hpr
 
     subject { Scraper.new(number) }
 
-    before do
-      stub_hpr_request(number, 'both')
+    context "with complete data returned from hpr" do
+      before do
+        stub_hpr_request(number, 'both')
+      end
+
+      it "returns nil when birthdate is n/a" do
+        expect(subject.birth_date).to be_nil
+      end
     end
 
-    it "returns nil when birthdate is n/a" do
-      expect(subject.birth_date).to be_nil
+    context "with corrupted data returned from hpr" do
+      before do
+        stub_hpr_request(number, 'corrupted_data')
+      end
+
+      it "raise exception" do
+        expect{subject.birth_date}.to raise_error(Hpr::ScrapingError)
+      end
     end
   end
 end

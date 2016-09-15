@@ -99,6 +99,8 @@ module Hpr
 
     def person_header
       @person_header ||= page.at_css(".person-header")
+      raise Hpr::ScrapingError, "Hpr number: #{hpr_number}" unless @person_header
+      @person_header
     end
 
   private
