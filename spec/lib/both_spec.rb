@@ -10,7 +10,7 @@ module Hpr
       stub_hpr_request(number, 'both')
     end
 
-    it "scrapes the birth name" do
+    it "scrapes the name" do
       expect(subject.name).to eq("BJØRN KETIL BREVIK")
     end
 
