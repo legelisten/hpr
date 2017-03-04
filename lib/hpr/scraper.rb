@@ -10,6 +10,7 @@ module Hpr
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
     CHIROPRACTOR = "Kiropraktor".freeze
+    PSYCHOLOGIST = "Psykolog".freeze
     NO_AUTHORIZATION = "Ingen autorisasjon".freeze
 
     include DateHelper
@@ -72,6 +73,17 @@ module Hpr
       !! chiropractor
     end
 
+    def psychologist
+      unless instance_variable_defined?(:@psychologist)
+        @psychologist = psychologist_approval_box ? Professional.new(psychologist_approval_box) : nil
+      end
+      @psychologist
+    end
+
+    def psychologist?
+      !! psychologist
+    end
+
     def dentist_approval_box
       unless instance_variable_defined?(:@dentist_approval_box)
         @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == DENTIST }
@@ -84,6 +96,13 @@ module Hpr
         @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PHYSICIAN }
       end
       @physician_approval_box
+    end
+
+    def psychologist_approval_box
+      unless instance_variable_defined?(:@psychologist_approval_box)
+        @psychologist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PSYCHOLOGIST }
+      end
+      @psychologist_approval_box
     end
 
     def chiropractor_approval_box
