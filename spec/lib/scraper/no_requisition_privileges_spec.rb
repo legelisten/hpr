@@ -1,16 +1,14 @@
-require_relative "../spec_helper"
+require_relative "../../spec_helper"
 
 module Hpr
   context 'Missing requisition privileges' do
-    let(:scraper) { Scraper.new(number) }
+    let(:html) { File.new("spec/fixtures/#{fixture}/#{number}.html") }
+    let(:scraper) { Scraper.new(number, html) }
 
     context 'requisition privileges' do
       let(:number) { "9364684" }
+      let(:fixture) { "no_requisition_rights" }
       let(:professional) { Professional.new(scraper.physician_approval_box) }
-
-      before do
-        stub_hpr_request(number, 'no_requisition_rights')
-      end
 
       context 'privilege name' do
         it 'returns nil' do

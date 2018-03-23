@@ -1,4 +1,3 @@
-require "rest_client"
 require "nokogiri"
 
 require "hpr/date_helper"
@@ -6,7 +5,6 @@ require "hpr/professional"
 
 module Hpr
   class Scraper
-    BASE_URL = "https://register.helsedirektoratet.no/Hpr/Hpr/Lookup".freeze
     PHYSICIAN = "Lege".freeze
     DENTIST = "Tannlege".freeze
     CHIROPRACTOR = "Kiropraktor".freeze
@@ -17,13 +15,11 @@ module Hpr
 
     attr_reader :hpr_number, :page
 
-    def initialize(hpr_number)
+    def initialize(hpr_number, html)
       @hpr_number = hpr_number
-      @page = Nokogiri::HTML(RestClient.post(BASE_URL, {"Number" => hpr_number}))
+      @page = Nokogiri::HTML(html)
 
-      if hpr_number_not_found?
-        raise Hpr::InvalidHprNumberError, "HPR number: #{hpr_number}"
-      elsif person_has_lost_authorization?
+      if person_has_lost_authorization?
         raise Hpr::MissingMedicalAuthorizationError, "HPR number: #{hpr_number}"
       end
     end
@@ -123,10 +119,6 @@ module Hpr
     end
 
   private
-
-    def hpr_number_not_found?
-      !!@page.at_xpath("//text()[contains(.,'HPR-nummer ikke funnet') or contains(.,'Vennligst oppgi HPR/ID-nummer')]")
-    end
 
     def person_has_lost_authorization?
       approval_boxes.length == 1 && approval_boxes[0].at_css("h3").text.strip == NO_AUTHORIZATION

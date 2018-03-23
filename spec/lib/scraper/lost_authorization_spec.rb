@@ -1,16 +1,14 @@
-require_relative "../spec_helper"
+require_relative "../../spec_helper"
 
 module Hpr
   describe "Person has HPR entry, but no authorization" do
+    let(:html) { File.new("spec/fixtures/#{fixture}/#{number}.html") }
 
-    let(:scraper) { Scraper.new(number) }
+    let(:scraper) { Scraper.new(number, html) }
 
     context "person used to be authorized in single category" do
       let(:number) { "6133290" }
-
-      before do
-        stub_hpr_request(number, 'lost_authorization')
-      end
+      let(:fixture) { "lost_authorization" }
 
       it "raises an exception" do
         expect{ scraper }.to raise_error(MissingMedicalAuthorizationError)
@@ -19,11 +17,8 @@ module Hpr
 
     context 'person used to be authorized in multiple categories' do
       let(:number) { "6128459" }
+      let(:fixture) { "lost_authorization" }
       let(:professional) { Professional.new(scraper.dentist_approval_box) }
-
-      before do
-        stub_hpr_request(number, 'lost_authorization')
-      end
 
       describe '#approved?' do
         it 'returns false' do

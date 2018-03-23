@@ -1,13 +1,12 @@
-require_relative "../spec_helper"
+require_relative "../../spec_helper"
 
 module Hpr
   describe "Dentist" do
-    subject { Scraper.new(hpr_number) }
-    let(:dentist) { subject.dentist }
+    let(:fixture) { "dentists" }
+    let(:html) { File.new("spec/fixtures/#{fixture}/#{hpr_number}.html") }
 
-    before do
-      stub_hpr_request(hpr_number, 'dentists')
-    end
+    subject { Scraper.new(hpr_number, html) }
+    let(:dentist) { subject.dentist }
 
     context 'dentist with all fields filled in' do
       let(:hpr_number) { "3049523" }
