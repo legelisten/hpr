@@ -1,10 +1,12 @@
-require_relative "../spec_helper"
+require_relative "../../spec_helper"
 
 module Hpr
   describe "Both" do
     let(:number) { "7122276" }
+    let(:fixture) { "both" }
+    let(:html) { File.new("spec/fixtures/#{fixture}/#{number}.html") }
 
-    subject { Scraper.new(number) }
+    subject { Scraper.new(number, html) }
 
     before do
       stub_hpr_request(number, 'both')

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="no">
+    <!-- Web assembly version: 1.8.2.16957+201803 Assembly changed at 7. mars 2018 10:52:42 On server: P-DOR-REG-OFF01 -->
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Helsepersonellregisteret - HPR</title>
+
+        <link href="/content/bundle?v=1.8.2.16957" rel="stylesheet"/>
+
+
+        <!--[if lt IE 9]>
+            <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+
+    <link href="/content/hpr/bundle?v=1RQCFS4KIQcsnGAHI-N47geb6iS88YLYugV1hv3TxH81" rel="stylesheet"/>
+
+    <link href="/Content/Hpr/print.css" rel="stylesheet" media="print" />
+
+    </head>
+    <body>
+
+
+        <div id="main-container">
+
+            <header>
+
+
+    <div class="container">
+
+        <div class="top-navigation">
+
+        </div>
+
+        <div class="header-left">
+            <h1>
+                <a href="/Hpr" title="Helsepersonellregisteret">
+                    Helsepersonellregisteret
+                </a>
+            </h1>
+        </div>
+
+        <div class="header-right">
+            <a href="http://register.helsedirektoratet.no" title="Helsedirektoratet">
+                <img src="/Content/Hpr/Images/helsedir.png" alt="Helsedirektoratet"  />
+            </a>
+        </div>
+
+    </div>
+
+            </header>
+
+            <nav id="main-nav">
+
+    <div class="container">
+        <div class="menu-divider"></div>
+    </div>
+
+            </nav>
+
+
+            <div id="content">
+                <section>
+
+
+
+
+
+
+
+<div class="container">
+    <div class="content-pane">
+
+
+
+<h2>Autorisasjonsstatus og HPR-nummer for helsepersonell</h2>
+
+<p>Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven,
+    og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og
+    forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere.</p>
+
+<p>Det er mulig å søke frem helsepersonell på følgende måter:</p>
+
+<ol>
+    <li>Skriv inn HPR-nummer.</li>
+    <li>Skriv inn fødselsdato (dd.mm.åååå) og etternavn. Da må begge felter fylles ut.</li>
+</ol>
+
+<div class="search-boxes">
+
+    <div class="left-section">
+        <div class="section-part">
+
+            <h3>Slå opp på HPR-nummer</h3>
+
+<form action="/Hpr/Hpr/Lookup" class="form-horizontal" method="post"><input name="__RequestVerificationToken" type="hidden" value="_07i0azlNkbo_242_DEnx_IQMHEOBs9miLRjnoNSAphsNOh1X_yBiWHctOb6sDd812j0ZuDxiKKFM30wWWmkfajVM_k2Ox28pEgChtBkor81" />                    <div class="control-group">
+                        <label class="control-label" for="Number">HPR-nummer:</label>
+                        <input type="text" name="Number" id="Number" placeholder="HPR#" />
+                        <button type="submit" class="btn">
+                            <i class="icon-search"></i> Søk
+                        </button>
+                    </div>
+</form>        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="section-part">
+
+            <h3>Søk etter fødselsdato/etternavn</h3>
+
+<form action="/Hpr/Hpr/Search" class="form-horizontal" method="post"><input name="__RequestVerificationToken" type="hidden" value="YoM3MV-cBpkomuBhJ4hXt57ZYntvRe0Av1KvFauscFTLBuUxSG4Yj8nhElTdLw38nt5seo6970efaNyqwu-BGWYWr48ORI63KIYv7kkRxeY1" />                    <div class="control-group">
+                        <label class="control-label" for="Birthdate">Fødselsdato:</label>
+                        <input type="text" name="Birthdate" id="Birthdate" placeholder="dd.mm.åååå" />
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="Lastname">Etternavn:</label>
+                        <input type="text" name="Lastname" id="Lastname" placeholder="Etternavn" />
+                        <button type="submit" class="btn">
+                            <i class="icon-search"></i> Søk
+                        </button>
+                    </div>
+</form>        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+                </section>
+            </div>
+
+        </div>
+
+        <footer>
+
+
+        </footer>
+
+    <script src="/scripts/frameworks/bundle?v=1.8.2.16957"></script>
+
+
+    <script src="/scripts/frameworks/datepicker-nb?v=gzIR_6DABvUrfGX83GDk2dVGYMTPvqpjtErLW9I0g7g1"></script>
+
+    <script src="/Scripts/HprScripts.js"></script>
+
+
+    </body>
+</html>

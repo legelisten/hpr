@@ -21,7 +21,7 @@ Or install it yourself as:
 ```ruby
 require "hpr"
 
-scraper = Hpr::Scraper.new(3049523)
+scraper = Hpr.scraper(hpr_number: '9434607')
 scraper.birth_date # => #<Date: 1966-11-05 ((2439435j,0s,0n),+0s,2299161j)>
 scraper.dentist? # => true
 dentist = scraper.dentist

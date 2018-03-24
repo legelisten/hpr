@@ -1,16 +1,15 @@
-require_relative "../spec_helper"
+require_relative "../../spec_helper"
 
 module Hpr
   describe "Chiropractor" do
     let(:number) { "6172733" }
+    let(:fixture) { "chiropractors" }
+    let(:html) { File.new("spec/fixtures/#{fixture}/#{number}.html") }
+
     let(:period) { Date.new(2014, 7, 2)..Date.new(2062, 3, 26) }
 
-    subject { Scraper.new(number) }
+    subject { Scraper.new(number, html) }
     let(:chiropractor) { subject.chiropractor }
-
-    before do
-      stub_hpr_request(number, 'chiropractors')
-    end
 
     it "scrapes the birth name" do
       expect(subject.name).to eq("BENEDICTE AAMBAKK")
