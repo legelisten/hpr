@@ -2,14 +2,14 @@ require 'mechanize'
 
 module Hpr
   class Fetcher
-    BASE_URL = 'https://register.helsedirektoratet.no/Hpr'.freeze
-    FORM_ACTION = '/Hpr/Hpr/Lookup'.freeze
+    BASE_URL = "https://register.helsedirektoratet.no/Hpr".freeze
+    FORM_ACTION = "/Hpr/Hpr/Lookup".freeze
     AGENT_ALIASES = ["Linux Firefox",
                      "Mac Firefox",
                      "Mac Safari",
                      "Windows Edge",
                      "Windows Firefox",
-                     "Windows IE11",
+                     "Windows IE 11",
                      "iPhone",
                      "iPad",
                      "Android"]
