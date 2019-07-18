@@ -26,7 +26,15 @@ module Hpr
     end
 
     def approval
-      @approval ||= approval_row.at_css(".cell2").text.strip
+      @approval ||= begin
+        approval_contents = approval_row.at_css(".cell2")
+
+        # Remove badges and any other HTML included
+        extra_html = approval_contents.at_css('*')
+        extra_html.remove if extra_html
+
+        approval_contents.text.strip
+      end
     end
 
     def approval_period
