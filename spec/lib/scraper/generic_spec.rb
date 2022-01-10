@@ -9,9 +9,12 @@ module Hpr
       let(:html) { File.new("spec/fixtures/#{fixture}/#{number}.html") }
       let(:fixture) { "both" }
 
-
       it "returns nil when birthdate is n/a" do
         expect(subject.birth_date).to be_nil
+      end
+
+      it "returns nil when deceased date is n/a" do
+        expect(subject.deceased_date).to be_nil
       end
     end
 

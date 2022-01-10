@@ -36,6 +36,14 @@ module Hpr
       end
     end
 
+    def deceased_date
+      @deceased_date ||= begin
+        birth_date_para = person_header.at_css("p").text
+        birth_date_str = birth_date_para[/Død: (\d{2}[.]\d{2}[.]\d{4})/, 1]
+        birth_date_str ? str_to_date(birth_date_str) : nil
+      end
+    end
+
     def physician
       unless instance_variable_defined?(:@physician)
         @physician = physician_approval_box ? Professional.new(physician_approval_box) : nil
@@ -118,10 +126,12 @@ module Hpr
       @person_header
     end
 
-  private
-
     def person_has_lost_authorization?
       approval_boxes.length == 1 && approval_boxes[0].at_css("h3").text.strip == NO_AUTHORIZATION
+    end
+
+    def person_is_deceased?
+      deceased_date != nil
     end
   end
 end
