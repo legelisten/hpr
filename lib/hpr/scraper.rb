@@ -18,10 +18,6 @@ module Hpr
     def initialize(hpr_number, html)
       @hpr_number = hpr_number
       @page = Nokogiri::HTML(html)
-
-      if person_has_lost_authorization?
-        raise Hpr::MissingMedicalAuthorizationError, "HPR number: #{hpr_number}"
-      end
     end
 
     def name

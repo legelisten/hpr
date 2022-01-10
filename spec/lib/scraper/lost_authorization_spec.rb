@@ -10,8 +10,8 @@ module Hpr
       let(:number) { "6133290" }
       let(:fixture) { "lost_authorization" }
 
-      it "raises an exception" do
-        expect{ scraper }.to raise_error(MissingMedicalAuthorizationError)
+      it "confirms person has lost authorization" do
+        expect(scraper.person_has_lost_authorization?).to eq true
       end
     end
 
