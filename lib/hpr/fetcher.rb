@@ -14,7 +14,7 @@ module Hpr
                      "iPad",
                      "Android"]
 
-    def initialize(hpr_number:)
+    def initialize(hpr_number)
       @hpr_number = hpr_number
     end
 
