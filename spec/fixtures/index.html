@@ -1,92 +1,46 @@
 <!DOCTYPE html>
-<html lang="no">
-    <!-- Web assembly version: 1.8.2.16957+201803 Assembly changed at 7. mars 2018 10:52:42 On server: P-DOR-REG-OFF01 -->
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Helsepersonellregisteret - PublicRazor</title>
+    <link rel="stylesheet" href="/Hpr/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Hpr/css/Hpr/layout.css?v=a2KoFQsxZ68ymF99Es3EcpQWyuAtRBA4DNbNyGaom0g" />
+    <link rel="stylesheet" href="/Hpr/css/Hpr/layout.responsive.css?v=1b5rIc9ecatIvWftbdAwZhW24zRYoYLYAe5jTYZQk_c" />
+</head>
+<body>
+    <header b-jtggizpntr>
+        <div b-jtggizpntr class="container">
+            <div b-jtggizpntr>
+                <h1 b-jtggizpntr>
+                    <a b-jtggizpntr href="/Hpr" title="Helsepersonellregisteret">
+                        Helsepersonellregisteret
+                    </a>
+                </h1>
+            </div>
 
-        <title>Helsepersonellregisteret - HPR</title>
-
-        <link href="/content/bundle?v=1.8.2.16957" rel="stylesheet"/>
-
-
-        <!--[if lt IE 9]>
-            <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
-
-    <link href="/content/hpr/bundle?v=1RQCFS4KIQcsnGAHI-N47geb6iS88YLYugV1hv3TxH81" rel="stylesheet"/>
-
-    <link href="/Content/Hpr/print.css" rel="stylesheet" media="print" />
-
-    </head>
-    <body>
-
-
-        <div id="main-container">
-
-            <header>
-
-
-    <div class="container">
-
-        <div class="top-navigation">
-
-        </div>
-
-        <div class="header-left">
-            <h1>
-                <a href="/Hpr" title="Helsepersonellregisteret">
-                    Helsepersonellregisteret
+            <div b-jtggizpntr>
+                <a b-jtggizpntr href="http://register.helsedirektoratet.no" title="Helsedirektoratet">
+                    <img b-jtggizpntr src="/Hpr/css/Hpr/Images/helsedir.png" alt="Helsedirektoratet"  />
                 </a>
-            </h1>
+            </div>
         </div>
-
-        <div class="header-right">
-            <a href="http://register.helsedirektoratet.no" title="Helsedirektoratet">
-                <img src="/Content/Hpr/Images/helsedir.png" alt="Helsedirektoratet"  />
-            </a>
-        </div>
-
-    </div>
-
-            </header>
-
-            <nav id="main-nav">
-
-    <div class="container">
-        <div class="menu-divider"></div>
-    </div>
-
-            </nav>
-
-
-            <div id="content">
-                <section>
-
-
-
-
-
-
-
-<div class="container">
-    <div class="content-pane">
-
-
+    </header>
+    <div b-jtggizpntr class="container">
+        <hr b-jtggizpntr />
+        <main b-jtggizpntr role="main" class="container">
 
 <h2>Autorisasjonsstatus og HPR-nummer for helsepersonell</h2>
 
 <p>Helsepersonellregisteret (HPR) er helsemyndighetens register over alt helsepersonell med autorisasjon eller lisens etter helsepersonelloven,
     og veterinærer med autorisasjon eller lisens etter dyrehelsepersonelloven. Ved søk gis opplysning om gjeldende autorisasjon, lisens og
-    forskrivningsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere.</p>
+    rekvireringsrett, og evt. begrensning i disse, samt evt. spesialitet for leger, tannleger og optikere.</p>
 
 <p>Det er mulig å søke frem helsepersonell på følgende måter:</p>
 
 <ol>
     <li>Skriv inn HPR-nummer.</li>
-    <li>Skriv inn fødselsdato (dd.mm.åååå) og etternavn. Da må begge felter fylles ut.</li>
+    <li>Skriv inn fødselsdato og etternavn.</li>
 </ol>
 
 <div class="search-boxes">
@@ -95,15 +49,23 @@
         <div class="section-part">
 
             <h3>Slå opp på HPR-nummer</h3>
+            <form method="post" action="/Hpr/Personnel">
 
-<form action="/Hpr/Personnel" class="form-horizontal" method="post"><input name="__RequestVerificationToken" type="hidden" value="_07i0azlNkbo_242_DEnx_IQMHEOBs9miLRjnoNSAphsNOh1X_yBiWHctOb6sDd812j0ZuDxiKKFM30wWWmkfajVM_k2Ox28pEgChtBkor81" />                    <div class="control-group">
-                        <label class="control-label" for="Number">HPR-nummer:</label>
-                        <input type="text" name="Number" id="Number" placeholder="HPR#" />
-                        <button type="submit" class="btn">
-                            <i class="icon-search"></i> Søk
-                        </button>
-                    </div>
-</form>        </div>
+                <div class="control-group">
+                    <label class="control-label" for="Number">HPR-nummer:</label>
+                    <input type="text" class="form-control input-control" name="hprNumber" id="Number" placeholder="HPR#" required/>
+                </div>
+                <div class="spacer"></div>
+                <div class="control-group">
+                    <button type="submit" class="btn" name="handler" value="HprNumberSubmit">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                        Søk
+                    </button>
+                </div>
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8ErorGS8TqVDnRcyYZGn4GwIz9C5CdQ_urrwA1ucbnaRWBfsnSQVZYooNc9kMcZNMM_XnHW-8jHp7oUDuUqWzk9i6g6UraWte66AfVqTPwveXlzVRRGGjenoLivKf5-Xa9gv5qpsuHHrguWL6GVeGhg" /></form>
+        </div>
     </div>
 
     <div class="right-section">
@@ -111,41 +73,44 @@
 
             <h3>Søk etter fødselsdato/etternavn</h3>
 
-<form action="/Hpr/Personnel" class="form-horizontal" method="post"><input name="__RequestVerificationToken" type="hidden" value="YoM3MV-cBpkomuBhJ4hXt57ZYntvRe0Av1KvFauscFTLBuUxSG4Yj8nhElTdLw38nt5seo6970efaNyqwu-BGWYWr48ORI63KIYv7kkRxeY1" />                    <div class="control-group">
-                        <label class="control-label" for="Birthdate">Fødselsdato:</label>
-                        <input type="text" name="Birthdate" id="Birthdate" placeholder="dd.mm.åååå" />
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="Lastname">Etternavn:</label>
-                        <input type="text" name="Lastname" id="Lastname" placeholder="Etternavn" />
-                        <button type="submit" class="btn">
-                            <i class="icon-search"></i> Søk
-                        </button>
-                    </div>
-</form>        </div>
-    </div>
+            <form method="post" action="/Hpr/Personnel">
 
-</div>
+                <div class="control-group">
+                    <label class="control-label" for="Birthdate">Fødselsdato:</label>
+                    <input type="text" class="form-control input-control" pattern="\d{2}.\d{2}.\d{4}" title="Vennligst skriv inn dato på formatet dd.mm.åååå" name="birthDate" id="Birthdate" placeholder="dd.mm.yyyy" required/>
+                </div>
 
-    </div>
-</div>
-                </section>
-            </div>
-
+                <div class="control-group">
+                    <label class="control-label" for="Lastname">Etternavn:</label>
+                    <input type="text" class="form-control input-control" name="lastname" id="Lastname" placeholder="Etternavn" required />
+                </div>
+                <div class="control-group">
+                    <button type="submit" class="btn" value="PersondataSubmit" name="handler">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                        Søk
+                    </button>
+                </div>
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8ErorGS8TqVDnRcyYZGn4GwIz9C5CdQ_urrwA1ucbnaRWBfsnSQVZYooNc9kMcZNMM_XnHW-8jHp7oUDuUqWzk9i6g6UraWte66AfVqTPwveXlzVRRGGjenoLivKf5-Xa9gv5qpsuHHrguWL6GVeGhg" /></form>
         </div>
+    </div>
 
-        <footer>
+</div>
 
+        </main>
+    </div>
 
-        </footer>
-
-    <script src="/scripts/frameworks/bundle?v=1.8.2.16957"></script>
-
-
-    <script src="/scripts/frameworks/datepicker-nb?v=gzIR_6DABvUrfGX83GDk2dVGYMTPvqpjtErLW9I0g7g1"></script>
-
-    <script src="/Scripts/HprScripts.js"></script>
+    <script src="/Hpr/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/Hpr/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Hpr/js/site.js?v=y_Ngd8W21UpuCUhEqGbUKDEqFnNfTjAfb24GhJJGUyM"></script>
 
 
-    </body>
-</html>
+    <script>
+        document.getElementById('Number').addEventListener('input', function (event) {
+            const value = this.value;
+            this.value = value.replace(/\D/g, '');
+        });
+    </script>
+
+</body>
