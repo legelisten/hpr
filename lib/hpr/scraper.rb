@@ -1,15 +1,18 @@
-require "nokogiri"
+# frozen_string_literal: true
 
-require "hpr/date_helper"
-require "hpr/professional"
+require 'nokogiri'
+
+require 'hpr/date_helper'
+require 'hpr/professional'
 
 module Hpr
   class Scraper
-    PHYSICIAN = "Lege".freeze
-    DENTIST = "Tannlege".freeze
-    CHIROPRACTOR = "Kiropraktor".freeze
-    PSYCHOLOGIST = "Psykolog".freeze
-    NO_AUTHORIZATION = "Ingen autorisasjon".freeze
+    PHYSICIAN = 'Lege'
+    DENTIST = 'Tannlege'
+    CHIROPRACTOR = 'Kiropraktor'
+    PSYCHOLOGIST = 'Psykolog'
+    MANUAL_THERAPIST = 'Manuellterapeut'
+    NO_AUTHORIZATION = 'Ingen autorisasjon'
 
     include DateHelper
 
@@ -21,12 +24,12 @@ module Hpr
     end
 
     def name
-      @name ||= person_header.at_css("h2").text.gsub(/\s{2,}/, " ")
+      @name ||= person_header.at_css('h2').text.gsub(/\s{2,}/, ' ')
     end
 
     def birth_date
       @birth_date ||= begin
-        birth_date_para = person_header.at_css("p").text
+        birth_date_para = person_header.at_css('p').text
         birth_date_str = birth_date_para[/Fødselsdato: (\d{2}[.]\d{2}[.]\d{4})/, 1]
         birth_date_str ? str_to_date(birth_date_str) : nil
       end
@@ -34,7 +37,7 @@ module Hpr
 
     def deceased_date
       @deceased_date ||= begin
-        birth_date_para = person_header.at_css("p").text
+        birth_date_para = person_header.at_css('p').text
         birth_date_str = birth_date_para[/Død: (\d{2}[.]\d{2}[.]\d{4})/, 1]
         birth_date_str ? str_to_date(birth_date_str) : nil
       end
@@ -48,7 +51,7 @@ module Hpr
     end
 
     def physician?
-      !! physician
+      !!physician
     end
 
     def dentist
@@ -59,7 +62,7 @@ module Hpr
     end
 
     def dentist?
-      !! dentist
+      !!dentist
     end
 
     def chiropractor
@@ -70,7 +73,7 @@ module Hpr
     end
 
     def chiropractor?
-      !! chiropractor
+      !!chiropractor
     end
 
     def psychologist
@@ -81,49 +84,68 @@ module Hpr
     end
 
     def psychologist?
-      !! psychologist
+      !!psychologist
+    end
+
+    def manual_therapist
+      unless instance_variable_defined?(:@manual_therapist)
+        @manual_therapist = manual_therapist_approval_box ? Professional.new(manual_therapist_approval_box) : nil
+      end
+      @manual_therapist
+    end
+
+    def manual_therapist?
+      !!manual_therapist
     end
 
     def dentist_approval_box
       unless instance_variable_defined?(:@dentist_approval_box)
-        @dentist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == DENTIST }
+        @dentist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == DENTIST }
       end
       @dentist_approval_box
     end
 
     def physician_approval_box
       unless instance_variable_defined?(:@physician_approval_box)
-        @physician_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PHYSICIAN }
+        @physician_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == PHYSICIAN }
       end
       @physician_approval_box
     end
 
     def psychologist_approval_box
       unless instance_variable_defined?(:@psychologist_approval_box)
-        @psychologist_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == PSYCHOLOGIST }
+        @psychologist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == PSYCHOLOGIST }
       end
       @psychologist_approval_box
     end
 
     def chiropractor_approval_box
       unless instance_variable_defined?(:@chiropractor_approval_box)
-        @chiropractor_approval_box = approval_boxes.find { |box| box.at_css("h3").text.strip == CHIROPRACTOR }
+        @chiropractor_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == CHIROPRACTOR }
       end
       @chiropractor_approval_box
     end
 
+    def manual_therapist_approval_box
+      unless instance_variable_defined?(:@manual_therapist_approval_box)
+        @manual_therapist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == MANUAL_THERAPIST }
+      end
+      @manual_therapist_approval_box
+    end
+
     def approval_boxes
-      @approval_boxes ||= page.css(".approval-box")
+      @approval_boxes ||= page.css('.approval-box')
     end
 
     def person_header
-      @person_header ||= page.at_css(".person-header")
+      @person_header ||= page.at_css('.person-header')
       raise Hpr::ScrapingError, "Hpr number: #{hpr_number}" unless @person_header
+
       @person_header
     end
 
     def person_has_lost_authorization?
-      approval_boxes.length == 1 && approval_boxes[0].at_css("h3").text.strip == NO_AUTHORIZATION
+      approval_boxes.length == 1 && approval_boxes[0].at_css('h3').text.strip == NO_AUTHORIZATION
     end
 
     def person_is_deceased?
