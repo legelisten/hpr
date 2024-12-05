@@ -98,6 +98,50 @@ module Hpr
       !!manual_therapist
     end
 
+    def physiotherapist
+      unless instance_variable_defined?(:@physiotherapist)
+        @physiotherapist = physiotherapist_approval_box ? Professional.new(physiotherapist_approval_box) : nil
+      end
+      @physiotherapist
+    end
+
+    def physiotherapist?
+      !!physiotherapist
+    end
+
+    def osteopath
+      unless instance_variable_defined?(:@osteopath)
+        @osteopath = osteopath_approval_box ? Professional.new(osteopath_approval_box) : nil
+      end
+      @osteopath
+    end
+
+    def osteopath?
+      !!osteopath
+    end
+
+    def naprapath
+      unless instance_variable_defined?(:@naprapath)
+        @naprapath = naprapath_approval_box ? Professional.new(naprapath_approval_box) : nil
+      end
+      @naprapath
+    end
+
+    def naprapath?
+      !!naprapath
+    end
+
+    def dental_hygienist
+      unless instance_variable_defined?(:@dental_hygienist)
+        @dental_hygienist = dental_hygienist_approval_box ? Professional.new(dental_hygienist_approval_box) : nil
+      end
+      @dental_hygienist
+    end
+
+    def dental_hygienist?
+      !!dental_hygienist
+    end
+
     def dentist_approval_box
       unless instance_variable_defined?(:@dentist_approval_box)
         @dentist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == DENTIST }
@@ -131,6 +175,34 @@ module Hpr
         @manual_therapist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == MANUAL_THERAPIST }
       end
       @manual_therapist_approval_box
+    end
+
+    def physiotherapist_approval_box
+      unless instance_variable_defined?(:@physiotherapist_approval_box)
+        @physiotherapist_approval = approval_boxes.find { |box| box.at_css('h3').text.strip == 'Fysioterapeut' }
+      end
+      @physiotherapist_approval
+    end
+
+    def osteopath_approval_box
+      unless instance_variable_defined?(:@osteopath_approval_box)
+        @osteopath_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == 'Osteopat' }
+      end
+      @osteopath_approval_box
+    end
+
+    def naprapath_approval_box
+      unless instance_variable_defined?(:@naprapath_approval_box)
+        @naprapath_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == 'Naprapat' }
+      end
+      @naprapath_approval_box
+    end
+
+    def dental_hygienist_approval_box
+      unless instance_variable_defined?(:@dental_hygienist_approval_box)
+        @dental_hygienist_approval_box = approval_boxes.find { |box| box.at_css('h3').text.strip == 'Tannpleier' }
+      end
+      @dental_hygienist_approval_box
     end
 
     def approval_boxes
